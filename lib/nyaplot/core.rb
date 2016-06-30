@@ -30,18 +30,13 @@ module Nyaplot
   end
 
   # generate initializing code
-  def self.generate_init_code(assets=:cdn)
+  def self.generate_init_code
+    path = File.expand_path("../templates/init.js.erb", __FILE__)
+    template = File.read(path)
     dep_libraries = @@dep_libraries
     additional_libraries = @@additional_libraries
-    js_dir = File.expand_path("../js", __FILE__)
-    case assets
-    when :cdn
-      path = File.expand_path("../templates/init.cdn.js.erb", __FILE__)
-    when :inline
-      path = File.expand_path("../templates/init.inline.js.erb", __FILE__)
-    end
-    template = File.read(path)
-    ERB.new(template).result(binding)
+    js = ERB.new(template).result(binding)
+    js
   end
 
   # Enable to show plots on IRuby notebook
@@ -50,18 +45,5 @@ module Nyaplot
     IRuby.display(IRuby.javascript(js))
   end
 
-  def self.load_notebook(assets=:inline)
-    init_code = generate_init_code(assets)
-    case assets
-    when :cdn
-      IRuby.display(IRuby.javascript(init_code))
-    when :inline
-      IRuby.display(IRuby.html(<<END_HTML))
-<script type="application/javascript">
-#{init_code}
-</script>
-END_HTML
-    end
-    true
-  end
+  init_iruby if defined? IRuby
 end
