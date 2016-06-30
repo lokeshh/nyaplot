@@ -47,8 +47,8 @@ describe Nyaplot do
           expect(rep).to be_kind_of(IRuby::Display::Representation)
           expect(rep.options[:mime]).to eq('application/javascript')
           expect(rep.object).to include('https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min')
-          expect(rep.object).to include('http://cdn.rawgit.com/domitry/d3-downloadable/master/d3-downloadable')
-          expect(rep.object).to include('http://cdn.rawgit.com/domitry/Nyaplotjs/master/release/nyaplot.js')
+          expect(rep.object).to include('https://cdn.rawgit.com/domitry/d3-downloadable/master/d3-downloadable')
+          expect(rep.object).to include('https://cdn.rawgit.com/domitry/Nyaplotjs/master/release/nyaplot.js')
         end
         expect(load_notebook).to eq(nil)
       end
